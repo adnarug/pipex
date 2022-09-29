@@ -1,11 +1,11 @@
 NAME = pipex.a
 SRC_DIR = src/
 OBJ_DIR = obj/
-FLAGS = -Werror -Wextra -Wall -g 
+FLAGS = -Werror -g -Wextra -Wall
 CC = gcc
 AR = ar rcs
-SRC_FILES = main
-
+SRC_FILES = main \
+			utils
 GNL_DIR = GNL/
 DEF_COLOR = \033[0;80m
 GREEN = \033[0;92m
@@ -20,7 +20,7 @@ OBJF = .cache_exists
 $(NAME): $(OBJ)
 	@$(MAKE) -C Printf/
 	@$(AR) $(NAME) $(OBJ) 
-	@$(CC) $(NAME) $(FLAGS) pipex.a -o pipex
+	@$(CC) $(NAME) $(FLAGS) Printf/libftprintf.a pipex.a -o pipex
 	@echo "$(GREEN)pipex compiled$(DEF_COLOR)"
 
 $(OBJ_DIR)%.o	:	$(SRC_DIR)%.c | $(OBJF)
