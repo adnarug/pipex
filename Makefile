@@ -4,8 +4,10 @@ OBJ_DIR = obj/
 FLAGS = -Werror -g -Wextra -Wall
 CC = gcc
 AR = ar rcs
-SRC_FILES = main \
-			utils
+SRC_FILES = main\
+			utils\
+			open_files\
+			path_check
 GNL_DIR = GNL/
 DEF_COLOR = \033[0;80m
 GREEN = \033[0;92m

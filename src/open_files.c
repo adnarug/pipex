@@ -1,54 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   open_files.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pguranda <pguranda@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/27 16:34:34 by pguranda          #+#    #+#             */
-/*   Updated: 2022/09/30 08:52:41 by pguranda         ###   ########.fr       */
+/*   Created: 2022/09/30 09:37:58 by pguranda          #+#    #+#             */
+/*   Updated: 2022/10/03 11:57:31 by pguranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex.h"
 
-
-int count_strings(char **array)
+void	open_files(char *infile_name, char *outfile_name, int *fd)
 {
-	int	i;
-	int counter;
-
-	i = 0;
-	counter = 0;
-	while (array[i] != NULL)
-	{
-		i++;
-		counter++;
-	}
-	return (counter);
-}
-
-void	print_2d(char **array)
-{
-	if (array == NULL)
+	
+	fd[0] = open(infile_name, O_RDWR, 0777);
+	fd[1] = open(outfile_name, O_RDWR, 0777);
+	if (fd[0] == -1 || fd[1] == -1)
 		return ;
-	int	x;
-	int	y;
-	int line_count;
-
-	x = 0;
-	y = 0;
-	line_count = count_strings(array);
-
-	while(y < line_count && array[y] != NULL)
-	{
-		while(array[y][x] != '\0')
-		{
-			printf("%c", array[y][x]);
-			x++;
-		}
-		printf("\n");
-		x = 0;
-		y++;
-	}
+	return ;
 }
