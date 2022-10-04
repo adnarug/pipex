@@ -6,7 +6,7 @@
 /*   By: pguranda <pguranda@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 16:34:34 by pguranda          #+#    #+#             */
-/*   Updated: 2022/09/30 08:52:41 by pguranda         ###   ########.fr       */
+/*   Updated: 2022/10/04 09:33:52 by pguranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,28 @@ void	print_2d(char **array)
 		printf("\n");
 		x = 0;
 		y++;
+	}
+}
+
+void	check_args_validity(int argc, char **argv)
+{
+	int				i;
+	unsigned int	len;
+
+	i = 0;
+	len = 0;
+	if (argc != 5)
+	{
+		perror("Invalid arguments input - wrong num");
+		exit (1);
+	}
+	while (i <= argc - 1)
+	{
+		if (argv[i] == NULL || *argv[i] == ' ')
+		{
+			perror("Invalid arguments input - empty parameter");
+			exit (1);
+		}
+		i++;
 	}
 }
