@@ -6,7 +6,7 @@
 /*   By: pguranda <pguranda@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 08:18:02 by pguranda          #+#    #+#             */
-/*   Updated: 2022/10/03 12:57:55 by pguranda         ###   ########.fr       */
+/*   Updated: 2022/10/05 12:34:43 by pguranda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ char	**add_path_sign(char **path_to_builtins)
 
 	i = 0;
 	line_count = count_strings(path_to_builtins);
-
-	builtin_paths_final = malloc(sizeof(char *) * line_count );
+	builtin_paths_final = malloc(sizeof(char *) * line_count);
 	if (builtin_paths_final == NULL)
 		return (NULL);
 	while (path_to_builtins[i] != NULL)
@@ -42,12 +41,47 @@ char	*check_paths(char **path_to_builtins, char	*command)
 	while (path_to_builtins[i] != NULL)
 	{
 		string_to_check = ft_strjoin(path_to_builtins[i], command);
-		// printf("%s \n", string_to_check);
 		if (access(string_to_check, F_OK) == 0)
-			return(string_to_check);
+			return (string_to_check);
 		else
 			i++;
 	}
-	printf("Correct path not found");
+	error("Error\nCorrect path not found");
 	return (NULL);
+}
+
+char	**find_path(char **envp)
+{
+	char	*path;
+	int		i;
+	char	**path_to_builtins;
+
+	path = NULL;
+	i = 0;
+	if (envp == NULL || *envp == NULL)
+		return (NULL);
+	while (ft_strncmp(envp[i], "PATH=", 5) != 0)
+		i++;
+	path = envp[i];
+	path_to_builtins = ft_split(path + 5, ':');
+	return (path_to_builtins);
+}
+
+void	find_correct_paths(t_param *parameters, char **envp)
+{
+	char	**path_to_builtins;
+
+	path_to_builtins = NULL;
+	path_to_builtins = find_path(envp);
+	if (path_to_builtins == NULL)
+		error("Error\nCould not find the PATH =");
+	path_to_builtins = add_path_sign(path_to_builtins);
+	parameters->correct_path1 = \
+		check_paths(path_to_builtins, parameters->cmd1_flags[0]);
+	if (parameters->correct_path1 == NULL)
+		error("Error\nPlease check cmd1");
+	parameters->correct_path2 = \
+		check_paths(path_to_builtins, parameters->cmd2_flags[0]);
+	if (parameters->correct_path2 == NULL)
+		error("Error\nPlease check cmd2");
 }
